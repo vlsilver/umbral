@@ -1,0 +1,52 @@
+name: Build Umbral Pre-Go
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go-version: ['1.24']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    - name: Build Rust library
+      run: |
+        cd umbral-pre
+        cargo build --release --features bindings-c
+
+    - name: Copy library for Go
+      run: |
+        mkdir -p umbral-pre-cgo/lib
+        cp umbral-pre/target/release/libumbral_pre.* umbral-pre-cgo/lib/ || true
+        cp umbral-pre/target/release/umbral_pre.* umbral-pre-cgo/lib/ || true
+
+    - name: Test Go library
+      run: |
+        cd umbral-pre-cgo
+        go mod tidy
+        go test -v ./...
+
+    - name: Run examples
+      run: |
+        cd umbral-pre-cgo
+        go run examples/basic_usage.go
