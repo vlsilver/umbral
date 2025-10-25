@@ -1,7 +1,7 @@
 package umbralprecgo
 
 /*
-#cgo LDFLAGS: -L./lib -L../target/release -lumbral_pre -ldl -lm
+#cgo LDFLAGS: -L./lib -lumbral_pre -ldl -lm
 #cgo darwin LDFLAGS: -framework Security -framework Foundation
 #cgo CFLAGS: -I../umbral-pre/src
 #include <stdlib.h>
