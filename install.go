@@ -46,6 +46,7 @@ func main() {
 	}
 
 	fmt.Println("Rust library built successfully!")
+	fmt.Println("Umbral Pre-Go v0.11.0-go is ready!")
 	fmt.Println("You can now use the library with:")
 	fmt.Println("go get github.com/vlsilver/umbral/umbral-pre-cgo")
 }
