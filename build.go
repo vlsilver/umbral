@@ -35,5 +35,21 @@ func main() {
 		log.Fatal("Failed to build Rust library:", err)
 	}
 
-	fmt.Println("Rust library built successfully!")
+	// Copy library to lib directory
+	libDir := filepath.Join(dir, "lib")
+	if err := os.MkdirAll(libDir, 0755); err != nil {
+		log.Fatal("Failed to create lib directory:", err)
+	}
+
+	// Copy the built library
+	srcLib := filepath.Join(parentDir, "target", "release", "libumbral_pre.dylib")
+	dstLib := filepath.Join(libDir, "libumbral_pre.dylib")
+
+	if err := exec.Command("cp", srcLib, dstLib).Run(); err != nil {
+		log.Printf("Warning: Failed to copy library: %v", err)
+	} else {
+		fmt.Printf("Copied library to %s\n", dstLib)
+	}
+
+	fmt.Println("Rust library built and copied successfully!")
 }
