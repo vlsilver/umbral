@@ -1,6 +1,9 @@
 # Umbral Pre-Go Makefile
+# Version: v0.11.0-go
 
-.PHONY: all build test clean install deps examples
+VERSION := v0.11.0-go
+
+.PHONY: all build test clean install deps examples version
 
 # Default target
 all: deps build test
@@ -79,9 +82,14 @@ docker-run:
 	@docker run --rm umbral-pre-go
 	@echo "✅ Docker container completed"
 
+# Show version
+version:
+	@echo "Umbral Pre-Go $(VERSION)"
+	@echo "Based on umbral-pre v0.11.0"
+
 # Help
 help:
-	@echo "Umbral Pre-Go Makefile"
+	@echo "Umbral Pre-Go $(VERSION) Makefile"
 	@echo "======================"
 	@echo ""
 	@echo "Available targets:"
@@ -98,6 +106,7 @@ help:
 	@echo "  dev-setup    - Complete development setup"
 	@echo "  docker-build - Build Docker image"
 	@echo "  docker-run   - Run Docker container"
+	@echo "  version      - Show version information"
 	@echo "  help         - Show this help"
 	@echo ""
 	@echo "Quick start:"

@@ -45,6 +45,9 @@ dist/
 *.tar.gz
 *.zip
 
+# Go module specific
+umbral-pre-cgo/lib/
+
 # Environment files
 .env
 .env.local
