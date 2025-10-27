@@ -1,7 +1,7 @@
 # Umbral Pre-Go Makefile
-# Version: v0.11.0-go
+# Version: v0.11.3-go
 
-VERSION := v0.11.0-go
+VERSION := v0.11.3-go
 
 .PHONY: all build test clean install deps examples version
 

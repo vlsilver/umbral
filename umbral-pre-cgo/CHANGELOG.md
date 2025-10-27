@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.11.3-go] - 2024-10-27
+
+### Added
+- **Auto-install functionality**: Package now automatically downloads native libraries on import
+- **One-command installation**: Users only need `go get github.com/vlsilver/umbral/umbral-pre-cgo`
+- **GitHub Actions workflow**: Automated building and releasing of pre-built libraries
+- **Cross-platform support**: Automatic detection and download of platform-specific libraries
+- **Fallback mechanisms**: Manual installation options if auto-download fails
+
+### Changed
+- **Installation process**: Simplified from 2-step to 1-step process
+- **Documentation**: Updated all docs to reflect single-command installation
+- **Release workflow**: Moved to GitHub Actions for automated releases
+
+### Fixed
+- **Windows compatibility**: Proper handling of `.dll` and `.lib` files
+- **Cross-platform builds**: Automated building for Windows, macOS, and Linux
+
 ## [v0.11.0-go] - 2024-10-25
 
 ### Added
