@@ -16,16 +16,20 @@ Go bindings for the Umbral Proxy Re-encryption library with Ethereum key support
 go get github.com/vlsilver/umbral/umbral-pre-cgo
 ```
 
-The package will automatically download the required native library for your platform from GitHub Releases.
+**Note**: If you encounter linker errors, the package will automatically download the required native library for your platform. If auto-download fails, use the manual methods below.
 
 ### Installation (Manual - If Auto-download Fails)
 
 ```bash
-# Method 1: Manual installer
+# Method 1: Install dependencies first
+go run github.com/vlsilver/umbral/install-deps.go
+go get github.com/vlsilver/umbral/umbral-pre-cgo
+
+# Method 2: Manual installer
 go run github.com/vlsilver/umbral/install-libs.go
 go get github.com/vlsilver/umbral/umbral-pre-cgo
 
-# Method 2: Build from source
+# Method 3: Build from source
 go run github.com/vlsilver/umbral/umbral-pre-cgo/build.go
 go get github.com/vlsilver/umbral/umbral-pre-cgo
 ```

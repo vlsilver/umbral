@@ -9,9 +9,21 @@ This document provides instructions for installing and using the `umbral-pre-cgo
 go get github.com/vlsilver/umbral/umbral-pre-cgo
 ```
 
-The package will automatically download the required Windows libraries (`libumbral_pre.dll` and `libumbral_pre.lib`) from GitHub Releases.
+**Note**: If you encounter linker errors like "cannot find -lumbral_pre", the package will automatically download the required Windows libraries. If auto-download fails, use the manual methods below.
 
 ## Manual Installation (If Auto-install Fails)
+
+### Method 1: Install Dependencies First
+```cmd
+go run github.com/vlsilver/umbral/install-deps.go
+go get github.com/vlsilver/umbral/umbral-pre-cgo
+```
+
+### Method 2: Manual Installer
+```cmd
+go run github.com/vlsilver/umbral/install-libs.go
+go get github.com/vlsilver/umbral/umbral-pre-cgo
+```
 
 ### Prerequisites
 
