@@ -10,7 +10,7 @@ if not exist "lib" mkdir "lib"
 
 REM Download pre-built library
 echo 📥 Downloading pre-built library...
-powershell -Command "& {Invoke-WebRequest -Uri 'https://github.com/vlsilver/umbral/releases/download/v0.11.3-go/libumbral_pre.dll' -OutFile 'lib\libumbral_pre.dll'}"
+powershell -Command "& {Invoke-WebRequest -Uri 'https://github.com/vlsilver/umbral/releases/download/v0.11.4-go/libumbral_pre.dll' -OutFile 'lib\libumbral_pre.dll'}"
 
 if exist "lib\libumbral_pre.dll" (
     echo ✅ Library downloaded successfully!

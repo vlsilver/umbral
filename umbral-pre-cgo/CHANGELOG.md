@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.11.4-go] - 2024-10-27
+
+### Added
+- **install-deps.go helper**: New script to install dependencies in module cache
+- **Better Windows support**: Improved installation process for Windows users
+- **Multiple fallback methods**: Enhanced installation options for different scenarios
+
+### Fixed
+- **Windows linker errors**: Resolved "cannot find -lumbral_pre" issues
+- **Module cache installation**: Proper dependency installation in Go module cache
+- **Cross-platform compatibility**: Better support for all platforms
+
+### Changed
+- **Installation documentation**: Updated README and WINDOWS.md with clearer instructions
+- **Error handling**: Improved error messages and troubleshooting steps
+
 ## [v0.11.3-go] - 2024-10-27
 
 ### Added

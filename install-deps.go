@@ -23,7 +23,7 @@ func main() {
 	fmt.Printf("📁 Module cache: %s\n", modCache)
 
 	// Find the umbral-pre-cgo module directory
-	umbralDir := filepath.Join(modCache, "github.com", "vlsilver", "umbral", "umbral-pre-cgo@v0.11.3-go")
+	umbralDir := filepath.Join(modCache, "github.com", "vlsilver", "umbral", "umbral-pre-cgo@v0.11.4-go")
 	if _, err := os.Stat(umbralDir); os.IsNotExist(err) {
 		fmt.Printf("❌ Module directory not found: %s\n", umbralDir)
 		fmt.Println("💡 Please run: go get github.com/vlsilver/umbral/umbral-pre-cgo")
@@ -64,7 +64,7 @@ func main() {
 
 	// Download library from GitHub Releases
 	fmt.Printf("📥 Downloading %s...\n", libName)
-	downloadURL := fmt.Sprintf("https://github.com/vlsilver/umbral/releases/download/v0.11.3-go/%s", libName)
+	downloadURL := fmt.Sprintf("https://github.com/vlsilver/umbral/releases/download/v0.11.4-go/%s", libName)
 
 	cmd = exec.Command("curl", "-L", "-o", libPath, downloadURL)
 	if err := cmd.Run(); err != nil {
