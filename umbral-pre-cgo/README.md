@@ -10,14 +10,23 @@ Go bindings for the Umbral Proxy Re-encryption library with Ethereum key support
 
 ## 🚀 Quick Start
 
-### Installation
+### Installation (One Command)
 
 ```bash
-# Install Rust (if not already installed)
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
+go get github.com/vlsilver/umbral/umbral-pre-cgo
+```
 
-# Install the library
+The package will automatically download the required native library for your platform from GitHub Releases.
+
+### Installation (Manual - If Auto-download Fails)
+
+```bash
+# Method 1: Manual installer
+go run github.com/vlsilver/umbral/install-libs.go
+go get github.com/vlsilver/umbral/umbral-pre-cgo
+
+# Method 2: Build from source
+go run github.com/vlsilver/umbral/umbral-pre-cgo/build.go
 go get github.com/vlsilver/umbral/umbral-pre-cgo
 ```
 
@@ -199,6 +208,21 @@ CMD ["./app"]
 - **CGO**: Enabled
 - **OS**: Linux, macOS, Windows
 
+### Platform-Specific Requirements
+
+#### Windows
+- Visual Studio Build Tools or MinGW-w64
+- Windows SDK (for MSVC builds)
+- See [WINDOWS.md](WINDOWS.md) for detailed Windows setup instructions
+
+#### Linux
+- GCC or Clang
+- Development headers (`build-essential` on Ubuntu/Debian)
+
+#### macOS
+- Xcode Command Line Tools
+- No additional setup required
+
 ## 🐛 Troubleshooting
 
 ### Build Issues
@@ -213,6 +237,26 @@ cd umbral-pre
 cargo clean
 cargo build --release --features bindings-c
 ```
+
+### Windows-Specific Issues
+
+#### Error: "cannot find -lumbral_pre"
+```cmd
+# Build Windows library
+cd umbral-pre
+cargo build --release --features bindings-c --target x86_64-pc-windows-msvc
+
+# Copy to lib directory
+cd ../umbral-pre-cgo
+mkdir lib
+copy ..\target\x86_64-pc-windows-msvc\release\umbral_pre.dll lib\libumbral_pre.dll
+copy ..\target\x86_64-pc-windows-msvc\release\umbral_pre.lib lib\libumbral_pre.lib
+```
+
+#### Error: "gcc failed: exit status 1"
+- Install Visual Studio Build Tools or MinGW-w64
+- Ensure Windows SDK is installed
+- Check PATH environment variable
 
 ### CGO Issues
 

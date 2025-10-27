@@ -25,6 +25,9 @@ build-rust:
 	@cd ../umbral-pre && cargo build --release --features bindings-c
 	@echo "✅ Rust library built"
 
+# Note: Cross-platform builds are handled by GitHub Actions
+# Use 'make build-rust' for local development only
+
 # Build Go library
 build-go:
 	@echo "🐹 Building Go library..."
@@ -87,6 +90,18 @@ version:
 	@echo "Umbral Pre-Go $(VERSION)"
 	@echo "Based on umbral-pre v0.11.0"
 
+# Note: Releases are handled by GitHub Actions
+# Push to main branch or manually trigger workflow
+
+# Clean everything
+clean-all:
+	@echo "🧹 Cleaning everything..."
+	@cd ../umbral-pre && cargo clean
+	@go clean
+	@rm -rf lib/ release-temp/
+	@rm -f *.exe *.dll *.so *.dylib
+	@echo "✅ Everything cleaned"
+
 # Help
 help:
 	@echo "Umbral Pre-Go $(VERSION) Makefile"
@@ -96,12 +111,13 @@ help:
 	@echo "  all          - Build and test everything"
 	@echo "  deps         - Install dependencies"
 	@echo "  build        - Build Rust and Go libraries"
-	@echo "  build-rust   - Build Rust library only"
+	@echo "  build-rust   - Build Rust library (local dev only)"
 	@echo "  build-go     - Build Go library only"
 	@echo "  test         - Run all tests"
 	@echo "  test-e2e     - Run E2E tests only"
 	@echo "  examples     - Run examples"
 	@echo "  clean        - Clean build artifacts"
+	@echo "  clean-all    - Clean everything (including libs)"
 	@echo "  install      - Install the library"
 	@echo "  dev-setup    - Complete development setup"
 	@echo "  docker-build - Build Docker image"
@@ -113,4 +129,9 @@ help:
 	@echo "  make dev-setup"
 	@echo ""
 	@echo "For users:"
+	@echo "  go run github.com/vlsilver/umbral/install-libs.go"
+	@echo "  go get github.com/vlsilver/umbral/umbral-pre-cgo"
+	@echo ""
+	@echo "For releases:"
+	@echo "  Push to main branch or trigger GitHub Actions workflow"
 	@echo "  go get github.com/vlsilver/umbral/umbral-pre-cgo"

@@ -1,0 +1,92 @@
+name: Build Pre-built Libraries
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            lib_name: libumbral_pre.so
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            lib_name: libumbral_pre.dylib
+            target: x86_64-apple-darwin
+          - os: windows-latest
+            lib_name: libumbral_pre.dll
+            target: x86_64-pc-windows-msvc
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    - name: Build Rust library
+      run: |
+        cd umbral-pre
+        cargo build --release --features bindings-c
+
+    - name: Prepare library for upload
+      run: |
+        mkdir -p lib
+        case "${{ matrix.os }}" in
+          "windows-latest")
+            cp umbral-pre/target/release/umbral_pre.dll lib/libumbral_pre.dll
+            cp umbral-pre/target/release/umbral_pre.lib lib/libumbral_pre.lib || true
+            ;;
+          "macos-latest")
+            cp umbral-pre/target/release/libumbral_pre.dylib lib/libumbral_pre.dylib
+            ;;
+          "ubuntu-latest")
+            cp umbral-pre/target/release/libumbral_pre.so lib/libumbral_pre.so
+            ;;
+        esac
+
+    - name: Test Go library
+      run: |
+        cd umbral-pre-cgo
+        go mod tidy
+        go test -v ./...
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: lib-${{ matrix.os }}
+        path: lib/
+        retention-days: 30
+
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          lib-ubuntu-latest/libumbral_pre.so
+          lib-macos-latest/libumbral_pre.dylib
+          lib-windows-latest/libumbral_pre.dll
+          lib-windows-latest/libumbral_pre.lib
+        generate_release_notes: true
+        tag_name: v${{ github.run_number }}-go
+        name: Release v${{ github.run_number }}-go
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
